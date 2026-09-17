@@ -1,0 +1,48 @@
+services:
+  airflow:
+    build:
+      context: ../..
+      dockerfile: services/airflow/Dockerfile
+
+    container_name: ai-layoffs-airflow
+
+    user: "${AIRFLOW_UID:-50000}:0"
+
+    environment:
+      AIRFLOW__CORE__EXECUTOR: SequentialExecutor
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "true"
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: sqlite:////opt/airflow/db/airflow.db
+
+      PROJECT_DIR: /opt/airflow/project
+      PROJECT_PYTHON: /home/airflow/.local/bin/python
+      PROJECT_HOST_PATH: /Users/rustem/Desktop/Asiga1
+
+      MLFLOW_ARTIFACT_LOCATION: file:///opt/airflow/project/mlruns
+
+    volumes:
+      - airflow-db:/opt/airflow/db
+      - ../../:/opt/airflow/project
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    ports:
+      - "8080:8080"
+
+    command: >
+      bash -c "
+      airflow db init &&
+      airflow users create
+        --username admin
+        --password admin
+        --firstname Student
+        --lastname User
+        --role Admin
+        --email admin@example.com || true &&
+      airflow scheduler &
+      exec airflow webserver
+      "
+
+volumes:
+  airflow-db:

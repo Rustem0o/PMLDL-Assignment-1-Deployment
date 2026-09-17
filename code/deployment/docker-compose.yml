@@ -1,0 +1,22 @@
+services:
+  api:
+    build:
+      context: ../..
+      dockerfile: code/deployment/api/Dockerfile
+    container_name: ai-layoffs-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ${PROJECT_HOST_PATH}/models:/app/models:ro
+
+  app:
+    build:
+      context: ../..
+      dockerfile: code/deployment/app/Dockerfile
+    container_name: ai-layoffs-app
+    depends_on:
+      - api
+    environment:
+      API_URL: http://api:8000/predict
+    ports:
+      - "8501:8501"

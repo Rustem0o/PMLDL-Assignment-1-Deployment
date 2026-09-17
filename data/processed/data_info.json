@@ -1,0 +1,11 @@
+{
+  "raw_rows": 12623,
+  "cleaned_rows": 11662,
+  "train_rows": 9329,
+  "test_rows": 2333,
+  "target_column": "target_high_ai_layoff",
+  "target_rule": "ai_score_imputed >= 75th percentile",
+  "target_ai_score_threshold": 65.9,
+  "positive_rate_train": 0.256,
+  "positive_rate_test": 0.2559
+}

@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.py[cod]
+.DS_Store
+.idea/
+.ipynb_checkpoints/
+
+mlruns/
+mlruns.backup/
+*.db
+*.db.backup
+
+.env
+services/airflow/logs/

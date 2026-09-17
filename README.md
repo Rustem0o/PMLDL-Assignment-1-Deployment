@@ -258,27 +258,3 @@ Response:
 
 The exact probability depends on the trained model.
 
-## Assignment Criteria Mapping
-
-| Criterion | Where it is implemented |
-|---|---|
-| Data engineering | `code/datasets/download_data.py`, `code/datasets/prepare_data.py` |
-| Missing values and outliers | `clean_data()` and `remove_worker_outliers()` in `prepare_data.py` |
-| Train/test split | `split_data()` in `prepare_data.py` |
-| Feature engineering | `code/common/features.py` |
-| Model training/evaluation/package | `code/models/train_model.py` |
-| MLflow logging | `train_model.py`, local `mlruns/` folder |
-| FastAPI model API | `code/deployment/api/main.py` |
-| Streamlit app | `code/deployment/app/app.py` |
-| Separate Docker containers | `code/deployment/docker-compose.yml` |
-| Airflow automation every 5 minutes | `services/airflow/dags/ai_layoff_pipeline_dag.py` |
-| Repository structure | This repository layout |
-
-## Before GitHub Submission
-
-1. Run `python3 run_pipeline.py`.
-2. Run `docker compose -f code/deployment/docker-compose.yml up --build`.
-3. Open the Streamlit app and make one prediction.
-4. Run or show the Airflow DAG scheduled every 5 minutes.
-5. Push the project to a public GitHub repository.
-6. Include the public GitHub link in the submission.
